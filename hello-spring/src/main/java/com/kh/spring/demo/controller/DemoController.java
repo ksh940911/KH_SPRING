@@ -1,17 +1,28 @@
 package com.kh.spring.demo.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.spring.demo.model.service.DemoService;
+import com.kh.spring.demo.model.validator.DevValidator;
 import com.kh.spring.demo.model.vo.Dev;
 
 /**
@@ -41,8 +52,9 @@ import com.kh.spring.demo.model.vo.Dev;
  * @ModelAttribute : model속성에 대한 getter
  * @SessionAttribute : session속성에 대한 getter
  * SessionStatus: @SessionAttribute로 등록된 속성에 대하여 사용완료(complete)처리
-
+ * 
  * Command객체 : http요청 파라미터를 커맨드객체에 저장한 VO객체
+ * @Valid 커맨드객체 유효성 검사용
  * Error, BindingResult : Command객체에 저장결과, Command객체 바로 다음위치시킬것.
  * 
  * 기타
@@ -54,6 +66,7 @@ import com.kh.spring.demo.model.vo.Dev;
  * </pre>
  */
 @Controller
+@RequestMapping("/demo")
 public class DemoController {
 	
 	
@@ -70,14 +83,14 @@ public class DemoController {
 	 * 사용자 요청을 처리하는 handler
 	 * @return
 	 */
-	@RequestMapping("/demo/devForm.do")
+	@RequestMapping("/devForm.do")
 	public String devForm() {
 		log.info("/demo/devForm.do 요청!");
 		//viewResolver빈에 의해서 /WEB-INF/views + demo/devForm + .jsp jsp파일로 위임.
 		return "demo/devForm";
 	}
 	
-	@RequestMapping("/demo/dev1.do")
+	@RequestMapping("/dev1.do")
 	public String dev1(HttpServletRequest request, HttpServletResponse response) {
 		//1. 사용자 입력값 처리
 		String name = request.getParameter("name");
@@ -114,9 +127,9 @@ public class DemoController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/demo/dev2.do")
+	@RequestMapping("/dev2.do")
 	public String dev2(
-			@RequestParam String name,
+			@RequestParam(name = "name") String name,
 			@RequestParam(defaultValue = "1") int career,
 			@RequestParam String email,
 			@RequestParam String gender,
@@ -131,6 +144,83 @@ public class DemoController {
 		
 		return "demo/devResult";
 	}
+	
+	
+	/**
+	 * 매개변수 Dev객체를  command커맨드객체라 한다.
+	 * @ModelAttribute 모델에 등록된 속성을 가져오는 애노테이션.
+	 * Dev객체는 handler도착전에 model에 등록되어 있다.
+	 * 
+	 * 커맨드객체 앞 @ModelAttribute 는 생략이 가능하다.
+	 * 
+	 * 
+	 * @param dev
+	 * @return
+	 */
+	@RequestMapping(value = "/dev3.do", method = {RequestMethod.POST})
+	public String dev3(@ModelAttribute Dev dev) {
+		log.info("dev = {}", dev);
+		
+		return "demo/devResult";
+	}
+	
+	
+	@RequestMapping(value = "/dev4.do", method = RequestMethod.POST)
+	public String dev4(@Valid Dev dev, BindingResult bindingResult) {
+		
+		if(bindingResult.hasErrors()) {
+			String errors = "";
+			List<ObjectError> errorList = bindingResult.getAllErrors();
+			for(ObjectError err : errorList) {
+				errors += "{" + err.getCode() + ":" + err.getDefaultMessage() + "} ";
+			}
+			throw new IllegalArgumentException(errors);
+		}
+		
+		return "demo/devResult";
+	}
+	
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.setValidator(new DevValidator());
+	}
+	
+	/**
+	 * RedirectAttributes
+	 * 
+	 * @param dev
+	 * @param redirectAttr
+	 * @return
+	 */
+	@RequestMapping(value = "/insertDev.do", method = RequestMethod.POST)
+	public String insertDev(@ModelAttribute Dev dev, RedirectAttributes redirectAttr) {
+		log.info("dev = {}", dev);
+		
+		try {
+			//1. 업무로직
+			int result = demoService.insertDev(dev);
+			
+			//2. 사용자 피드백 & 리다이렉트
+			redirectAttr.addFlashAttribute("msg", "dev 등록 성공!");
+		} catch(Exception  e) {
+			log.error("dev 등록 오류!", e); // 에러 로그
+			throw e;
+		}
+		
+		return "redirect:/demo/devList.do";
+	}
+	
+	@RequestMapping(value = "/devList.do", method = RequestMethod.GET)
+	public String devvvvvvvvvvvvvvvvvList(Model model) {
+		//1. 업무로직
+		List<Dev> list = demoService.selectDevList();
+		log.info("list = {}", list);
+		log.info("1234567890");
+		//2. jsp위임
+		model.addAttribute("list", list);
+		return "demo/devList";
+	}
+	
 	
 }
 

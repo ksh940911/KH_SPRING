@@ -14,6 +14,7 @@
 		property[name=remocon] <-  setRemocon
 		constructor-arg <- 파라미터생성자를 이용해서 객체생성(ref필수)
 	-->
+	
 	<bean id="lgTv" class="com.kh.spring.tv.model.vo.LgTv" scope="prototype">
 		<!-- <property name="remocon" ref="lgRemocon"/> -->
 		<constructor-arg ref="lgRemocon"/>
@@ -22,7 +23,6 @@
 			<property name="remocon" ref="ssRemocon"/>
 			<constructor-arg ref="SsRemocon"/>
 	</bean>
-	
 	<bean id="lgRemocon" class="com.kh.spring.tv.model.vo.LgRemoteControl"/>
 	<bean id="ssRemocon" class="com.kh.spring.tv.model.vo.SamsungRemoteControl"/>
 </beans>

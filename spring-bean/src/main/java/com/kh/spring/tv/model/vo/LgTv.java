@@ -17,7 +17,7 @@ public class LgTv implements Tv {
 	}
 	
 	/**
-	 * bean>constructor
+	 * bean>constructor-arg
 	 * 생성자를 이용해서 의존주입 DI 한다.
 	 * @param remocon
 	 */

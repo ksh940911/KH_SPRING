@@ -8,8 +8,8 @@
 		빈 등록
 		id : 빈이름(고유값)
 		class : 빈의 타입 
-		scope : singletone(기본값) | prototype | request | session
-		lazy-init : default(기본값) | true
+		scope : singletone(기본값. 하나의 객체로 운영) | prototype(요청(getBean)할때마다 새로만듦) | request(하나의 요청마다 하나의 객체) | session(하나의 세션마다 하나의 객체)
+		lazy-init : default(기본값) | true(호출이 있을때)
 		
 		property[name=remocon] <-  setRemocon
 		constructor-arg <- 파라미터생성자를 이용해서 객체생성(ref필수)
@@ -19,9 +19,9 @@
 		<!-- <property name="remocon" ref="lgRemocon"/> -->
 		<constructor-arg ref="lgRemocon"/>
 	</bean>
-	<bean id="samsungTv" class="com.kh.spring.tv.model.vo.SamsungTv" lazy-init="true">
+	<bean id="samsungTv" class="com.kh.spring.tv.model.vo.SamsungTv" lazy-init="true"><!-- lazy-init 객체 처음에 초기화할때 안 만들고 필요할때 만들경우 속성값을 true로 설정하면 된다. 미리만들어 놓지 않고 달라고할때(getBean하기 직전에) 만드는 것.-->
 			<property name="remocon" ref="ssRemocon"/>
-			<constructor-arg ref="SsRemocon"/>
+			<constructor-arg ref="ssRemocon"/>
 	</bean>
 	<bean id="lgRemocon" class="com.kh.spring.tv.model.vo.LgRemoteControl"/>
 	<bean id="ssRemocon" class="com.kh.spring.tv.model.vo.SamsungRemoteControl"/>

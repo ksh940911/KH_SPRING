@@ -4,7 +4,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"           
 	xsi:schemaLocation="http://xml1ns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	version="3.1">
-	<!-- #1.3 web-modulde version 3.1 upgrade-->
+	<!-- #1.3 web-module version 3.1 upgrade-->
 	
 	
 	<!-- #3. Application Context 빈 설정파일 -->

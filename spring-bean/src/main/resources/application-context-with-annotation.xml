@@ -6,7 +6,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
 	<!-- 
-		base-package하위의 클래스들의 annotation을 처리
+		base-package하위클래스들의 annotation을 처리
 		- @Component : 해당 클래스를 bean으로 등록
 		- @Autowired : 의존주입 DI 처리 (필드, setter, 생성자 레벨에서 사용)
 	-->

@@ -27,6 +27,10 @@ public class UserController {
 		this.userService = userService;
 	}
 	
+	/**
+	 * 3. 생성자
+	 * 
+	 */
 	@Autowired
 	public UserController(UserService userService) {
 		this.userService = userService;

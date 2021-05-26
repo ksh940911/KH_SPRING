@@ -132,7 +132,7 @@
 			<scope>provided</scope>
 		</dependency>	
 		       
-		<!-- #6. 커맨드객체 유효성검사 @Valid-->
+		<!-- #6. 커맨드객체 유효성검사 @Valid -->
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>

@@ -29,19 +29,34 @@
 			</c:forEach>
 		</td>
 		<td>
-			<button class="btn btn-outline-secondary" onclick="updateDev();" data-no="${dev.no}">수정</button>
-			<button class="btn btn-outline-danger" onclick="deleteDev()" data-no="${dev.no}">삭제</button>
+			<button class="btn btn-outline-secondary" onclick="updateDev(this);" data-no="${dev.no}">수정</button>
+			<button class="btn btn-outline-danger" onclick="deleteDev(this)" data-no="${dev.no}">삭제</button>
 		</td>
 	</tr>
 	</c:forEach>
 </table>
+<form
+	name="devDelFrm" 
+	action="${pageContext.request.contextPath}/demo/deleteDev.do" 
+	method="POST">
+	<input type="hidden" name="no" value="" />
+</form>
 <script>
-function updateDev(){
+function updateDev(btn){
 	//GET /demo/updateDev.do?no=123 ---> devUpdateForm.jsp
 	//POST /demo/updateDev.do ---> redirect:/demo/devList.do
+	var no = $(btn).data("no");
+	//console.log(btn, no);
+	location.href = `${pageContext.request.contextPath}/demo/updateDev.do?no=\${no}`;
 }
-function deleteDev(){
+function deleteDev(btn){
 	//POST /demo/deleteDev.do ---> redirect:/demo/devList.do
+	var no = $(btn).data("no");
+	if(confirm(no + "번 개발자 정보를 정말 삭제하시겠습니까?")){
+		var $frm = $(document.devDelFrm);
+		$frm.find("[name=no]").val(no);
+		$frm.submit();
+	}
 }
 
 </script>

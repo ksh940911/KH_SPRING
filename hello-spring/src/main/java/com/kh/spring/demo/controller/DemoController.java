@@ -53,7 +53,7 @@ import com.kh.spring.demo.model.vo.Dev;
 
  * @ModelAttribute : model속성에 대한 getter
  * @SessionAttribute : session속성에 대한 getter
- * SessionStatus: @SessionAttribute로 등록된 속성에 대하여 사용완료(complete)처리
+ * SessionStatus: @SessionAttributes로 등록된 속성에 대하여 사용완료(complete)처리
  * 
  * Command객체 : http요청 파라미터를 커맨드객체에 저장한 VO객체
  * @Valid 커맨드객체 유효성 검사용
@@ -149,8 +149,8 @@ public class DemoController {
 	
 	
 	/**
-	 * 매개변수 Dev객체를 command커맨드객체라 한다.
-	 * @ModelAttribute 모델에 등록된 속성을 가져오는 어노테이션.
+	 * 매개변수 Dev객체를  command커맨드객체라 한다.
+	 * @ModelAttribute 모델에 등록된 속성을 가져오는 애노테이션.
 	 * Dev객체는 handler도착전에 model에 등록되어 있다.
 	 * 
 	 * 커맨드객체 앞 @ModelAttribute 는 생략이 가능하다.

@@ -37,13 +37,13 @@ public class DevValidator implements Validator {
 			errors.rejectValue("name", "error-name", "개발자명 누락!");
 		}
 		if(!Pattern.matches("[가-힣]{2,}", name)) {
-			errors.rejectValue("name", "error-name", "한글 이름 부적절!");
+			errors.rejectValue("name", "error-name","한글 이름 부적절!");
 		}
 		
 		//2. 경력검사
 		int career = dev.getCareer();
 		if(career < 0) {
-			errors.rejectValue("career", "error-career", "경력 기간 오류!");
+			errors.rejectValue("career", "error-career","경력 기간 오류!");
 		}
 	}
 

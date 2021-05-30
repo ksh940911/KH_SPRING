@@ -58,7 +58,6 @@ select
 from
     member;
     
-    
 
 
 

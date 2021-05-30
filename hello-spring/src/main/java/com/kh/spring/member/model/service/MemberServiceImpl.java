@@ -22,4 +22,6 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.selectOneMember(id);
 	}
 
+	
+	
 }

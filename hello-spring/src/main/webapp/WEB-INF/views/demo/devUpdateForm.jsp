@@ -55,8 +55,9 @@ div#demo-container{
 				  <label class="form-check-label" for="gender0">남</label>
 				</div>
 				<div class="form-check form-check-inline">
-				  <input class="form-check-input" type="radio" name="gender" 				  		 
-				  		 id="gender1" value="F" ${dev.gender eq 'F' ? 'checked' : ''}>
+				  <input 
+				  	class="form-check-input" type="radio" name="gender" 				  		 
+				  	id="gender1" value="F" ${dev.gender eq 'F' ? 'checked' : ''}>
 				  <label class="form-check-label" for="gender1">여</label>
 				</div>
 			</div>
@@ -65,7 +66,7 @@ div#demo-container{
 			<label class="col-sm-2 col-form-label">개발언어</label>
 			<div class="col-sm-10">
 				<div class="form-check form-check-inline">
-				  <input class="form-check-inpu t" type="checkbox" name="lang" id="Java" value="Java" ${langList.contains("Java") ? "checked" : ""}>
+				  <input class="form-check-input" type="checkbox" name="lang" id="Java" value="Java" ${langList.contains("Java") ? "checked" : ""}>
 				  <label class="form-check-label" for="Java">Java</label>
 				</div>
 				<div class="form-check form-check-inline">
@@ -103,7 +104,7 @@ $(document.devFrm).submit((e) => {
 	//2. 개발언어는 하나이상 선택해야 한다.
 	var $lang = $("[name=lang]:checked");
 	if($lang.length == 0){
-		alert("하나이상의 개발언어를 선택하세요.");
+		alert("하나이사의 개발언어를 선택하세요.");
 		e.preventDefault();
 	}
 	

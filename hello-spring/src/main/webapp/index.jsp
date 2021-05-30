@@ -6,7 +6,9 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="헬로우 스프으으으리이이잉" name="title"/>
 </jsp:include>
-
+<% 
+	System.out.println("index.jsp!!!");
+%>
 		<img src="${pageContext.request.contextPath }/resources/images/logo-spring.png" id="center-image" alt="스프링로고" class="d-block mx-auto mt-5"/>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

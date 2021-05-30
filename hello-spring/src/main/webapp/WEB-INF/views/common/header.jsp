@@ -57,6 +57,7 @@
 				    </li>
 			    </ul>
 			    <c:if test="${loginMember == null}">
+   			    <%--로그인 이전--%>
 			    <button 
 			    	class="btn btn-outline-success my-2 my-sm-0"
 			    	onclick="location.href='${pageContext.request.contextPath}/member/memberLogin.do';" 
@@ -68,7 +69,8 @@
                 	type="button">회원가입</button>
 			    </c:if>
 			    <c:if test="${loginMember != null}">
-			    <span><a href="#">${loginMember.name}</a>님, 안녕하세요.</span>
+			    <%--로그인 이후--%>
+			    <span><a href="${pageContext.request.contextPath}/member/memberDetail.do">${loginMember.name}</a>님, 안녕하세요.</span>
 			    &nbsp;
 			    <button 
 			    	class="btn btn-outline-success my-2 my-sm-0"

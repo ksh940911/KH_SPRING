@@ -30,6 +30,22 @@
 	<!-- base-package하위의 어노테이션을 검색/처리 @Component, @Autowired, @Controller, @Service.... -->
 	<context:component-scan base-package="com.kh.spring" />
 	
-	
+	<!-- #9. interceptor 등록 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/**"/>
+			<beans:bean 
+				id="loggerInterceptor" 
+				class="com.kh.spring.common.interceptor.LoggerInterceptor" />
+		</interceptor>
+		<interceptor>
+			<mapping path="/member/**"/>
+			<exclude-mapping path="/member/memberLogin.do"/>
+			<exclude-mapping path="/member/memberEnroll.do"/>
+			<beans:bean 
+					id="loginInterceptor"
+					class="com.kh.spring.common.interceptor.LoginInterceptor"/>
+		</interceptor>
+	</interceptors>
 	
 </beans:beans>

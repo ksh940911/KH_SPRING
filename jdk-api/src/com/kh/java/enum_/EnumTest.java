@@ -88,9 +88,5 @@ public class EnumTest {
 	class Person {
 		private String name;
 		private int color;
-	}
-	
-	
-	
-	
+	}		
 }

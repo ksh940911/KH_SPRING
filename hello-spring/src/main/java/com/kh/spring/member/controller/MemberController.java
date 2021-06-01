@@ -91,7 +91,6 @@ public class MemberController {
 	}
 	
 	
-	
 	@GetMapping("/memberEnroll.do")
 	public void memberEnroll() {
 		// /WEB-INF/views/member/memberEnroll.jsp 로 자동포워딩됨.

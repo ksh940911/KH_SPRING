@@ -62,6 +62,7 @@ div.result{width:70%; margin:0 auto;}
 			});
 	        </script>
 			
+			<!-- 2. GET /menus/kr  /menus/ch  /menus/jp -->
 			<div class="menu-test">
 				<h4>추천메뉴(GET)</h4>
 				<form id="menuRecommendationFrm">
@@ -77,24 +78,269 @@ div.result{width:70%; margin:0 auto;}
 					</div>
 					<br />
 					<div class="form-check form-check-inline">
-						<input type="radio" class="form-check-input" name="taste" id="get-no-taste" value="" checked>
+						<input type="radio" class="form-check-input" name="taste" id="get-no-taste" value="all" checked>
 						<label for="get-no-taste" class="form-check-label">모두</label>&nbsp;
-						<input type="radio" class="form-check-input" name="taste" id="get-hot" value="hot" checked>
+						<input type="radio" class="form-check-input" name="taste" id="get-hot" value="hot">
 						<label for="get-hot" class="form-check-label">매운맛</label>&nbsp;
 						<input type="radio" class="form-check-input" name="taste" id="get-mild" value="mild">
 						<label for="get-mild" class="form-check-label">순한맛</label>
 					</div>
 					<br />
-					<input type="button" class="btn btn-block btn-outline-success btn-send" value="전송" >
+					<input type="submit" class="btn btn-block btn-outline-success btn-send" value="전송" >
 				</form>
 			</div>
 			<div class="result" id="menuRecommendation-result"></div>
+			<script>
+			$("#menuRecommendationFrm").submit(e => {
+				// 폼제출을 방지 : return false;
+				e.preventDefault();
+				
+				// 현재폼
+				const $frm = $(e.target);
+				const type = $frm.find("[name=type]:checked").val();
+				const taste = $frm.find("[name=taste]:checked").val();
+				console.log(type, taste);
+
+				$.ajax({
+					url: `${pageContext.request.contextPath}/menus/\${type}/\${taste}`,
+					success(data){
+						console.log(data);
+						displayResultTable("menuRecommendation-result", data);
+					},
+					error: console.log
+				});
+				
+				
+			});
+
+
+			</script>
+			
+			    
+			<!-- 2.POST /menu -->
+			<div class="menu-test">
+				<h4>메뉴 등록하기(POST)</h4>
+				<form id="menuEnrollFrm">
+					<input type="text" name="restaurant" placeholder="음식점" class="form-control" />
+					<br />
+					<input type="text" name="name" placeholder="메뉴" class="form-control" />
+					<br />
+					<input type="number" name="price" placeholder="가격" class="form-control" />
+					<br />
+					<div class="form-check form-check-inline">
+						<input type="radio" class="form-check-input" name="type" id="post-kr" value="kr" checked>
+						<label for="post-kr" class="form-check-label">한식</label>&nbsp;
+						<input type="radio" class="form-check-input" name="type" id="post-ch" value="ch">
+						<label for="post-ch" class="form-check-label">중식</label>&nbsp;
+						<input type="radio" class="form-check-input" name="type" id="post-jp" value="jp">
+						<label for="post-jp" class="form-check-label">일식</label>&nbsp;
+					</div>
+					<br />
+					<div class="form-check form-check-inline">
+						<input type="radio" class="form-check-input" name="taste" id="post-hot" value="hot" checked>
+						<label for="post-hot" class="form-check-label">매운맛</label>&nbsp;
+						<input type="radio" class="form-check-input" name="taste" id="post-mild" value="mild">
+						<label for="post-mild" class="form-check-label">순한맛</label>
+					</div>
+					<br />
+					<input type="submit" class="btn btn-block btn-outline-success btn-send" value="등록" >
+				</form>
+			</div>
+			<script>
+			/**
+			*  POST /menu
+			*/
+			$("#menuEnrollFrm").submit(e => {
+				e.preventDefault(); // 폼제출 방지
+				const $frm = $(e.target);
+				const restaurant = $frm.find("[name=restaurant]").val(); 
+				const name = $frm.find("[name=name]").val(); 
+				const price = Number($frm.find("[name=price]").val()); 
+				const type = $frm.find("[name=type]:checked").val(); 
+				const taste = $frm.find("[name=taste]:checked").val(); 
+
+				const menu = {
+					restaurant,
+					name,
+					price,
+					type,
+					taste
+				};
+
+				console.log(menu);
+				$.ajax({
+					url: "${pageContext.request.contextPath}/menu",
+					data: JSON.stringify(menu),
+					contentType: "application/json; charset=utf-8",
+					method: "POST",
+					success(data) {
+						console.log(data);
+						const {msg} = data;
+						alert(msg);
+					},
+					error: console.log, 
+					complete(){
+						e.target.reset(); // 폼초기화
+					} 
+				});
+			});
+			</script>
+			
+			<!-- #3.PUT /menu/123 -->
+			<div class="menu-test">
+				<h4>메뉴 수정하기(PUT)</h4>
+				<p>메뉴번호를 사용해 해당메뉴정보를 수정함.</p>
+				<form id="menuSearchFrm">
+					<input type="text" name="id" placeholder="메뉴번호" class="form-control" /><br />
+					<input type="submit" class="btn btn-block btn-outline-primary btn-send" value="검색" >
+				</form>
+				<hr />
+				<form id="menuUpdateFrm">
+					<input type="hidden" name="id" />
+					<input type="text" name="restaurant" placeholder="음식점" class="form-control" />
+					<br />
+					<input type="text" name="name" placeholder="메뉴" class="form-control" />
+					<br />
+					<input type="number" name="price" placeholder="가격" step="1000" class="form-control" />
+					<br />
+					<div class="form-check form-check-inline">
+						<input type="radio" class="form-check-input" name="type" id="put-kr" value="kr" checked>
+						<label for="put-kr" class="form-check-label">한식</label>&nbsp;
+						<input type="radio" class="form-check-input" name="type" id="put-ch" value="ch">
+						<label for="put-ch" class="form-check-label">중식</label>&nbsp;
+						<input type="radio" class="form-check-input" name="type" id="put-jp" value="jp">
+						<label for="put-jp" class="form-check-label">일식</label>&nbsp;
+					</div>
+					<br />
+					<div class="form-check form-check-inline">
+						<input type="radio" class="form-check-input" name="taste" id="put-hot" value="hot" checked>
+						<label for="put-hot" class="form-check-label">매운맛</label>&nbsp;
+						<input type="radio" class="form-check-input" name="taste" id="put-mild" value="mild">
+						<label for="put-mild" class="form-check-label">순한맛</label>
+					</div>
+					<br />
+					<input type="submit" class="btn btn-block btn-outline-success btn-send" value="수정" >
+				</form>
+			</div>
+			<script>
+			$("#menuUpdateFrm").submit(e => {
+				e.preventDefault();
+				const $frm = $(e.target);
+				
+				const menu = {
+					id : $frm.find("[name=id]").val(),
+					restaurant : $frm.find("[name=restaurant]").val(),
+					name : $frm.find("[name=name]").val(),
+					price : $frm.find("[name=price]").val(),
+					type : $frm.find("[name=type]:checked").val(),
+					taste : $frm.find("[name=taste]:checked").val(),
+				};
+				console.log(menu);
+
+				//formData를 활용해서 객체만들기
+				/* const menu = new FormData(e.target);
+				console.log(menu); */
+
+				$.ajax({
+					url: `${pageContext.request.contextPath}/menu/\${menu.id}`,
+					method: "PUT",
+					contentType: "application/json; charset=utf-8",
+					data: JSON.stringify(menu),
+					success(data){
+						console.log(data);
+						const {msg} = data;
+						alert(msg);
+					},
+					error: console.log,
+					complete(){
+						$("#menuSearchFrm")[0].reset();
+						$("#menuUpdateFrm")[0].reset();
+					}
+				});
+				
+			});
+
+			
+			$("#menuSearchFrm").submit(e => {
+				e.preventDefault();
+
+				// e.target하위의 선택자를 조회
+				const id = $("[name=id]", e.target).val();
+				if(!id) return;
+
+				$.ajax({
+					url: `${pageContext.request.contextPath}/menu/\${id}`,
+					method: "GET",
+					success(data){
+						console.log(data);
+
+						if(data){
+							const $frm = $("#menuUpdateFrm");
+							const {id, restaurant, name, price, type, taste} = data;
+							$frm.find("[name=id]").val(id);
+							$frm.find("[name=restaurant]").val(restaurant);
+							$frm.find("[name=price]").val(price);
+							$frm.find("[name=name]").val(name);
+							$frm.find(`[name=type][value=\${type}]`).prop("checked", true);
+							$frm.find(`[name=taste][value=\${taste}]`).prop("checked", true);
+							
+						}
+						//else {
+						//	alert("해당 메뉴가 존재하지 않습니다.");
+						//	$("[name=id]", e.target).select();
+						//}
+						
+					},
+					error(xhr, statusText, err){
+						console.log(xhr, statusText, err);
+
+						const {status} = xhr;
+						status == 404 && alert("해당 메뉴가 존재하지 않습니다.");
+						$("[name=id]", e.target).select();
+					}
+				});
+				
+
+			});
+			</script>
+			
+			
+			
 		</div>
 	</section>
 	<footer>
 		<p>&lt;Copyright 2017. <strong>KH정보교육원</strong>. All rights reserved.&gt;</p>
 	</footer>
+<script>
+function displayResultTable(id, data){
+	const $container = $("#" + id);
+	let html = "<table class='table'>";
+	html += "<tr><th>번호</th><th>음식점</th><th>메뉴</th><th>가격</th><th>타입</th><th>맛</th></tr>";
+
+	//mybatis session.selectList는 데이터는 없는 경우, 빈 list를 리턴
+	if(data.length > 0){
+		$(data).each((i, menu) => {
+			const {id, restaurant, name, price, type, taste} = menu;
+			html += `
+				<tr>
+					<td>\${id}</td>
+					<td>\${restaurant}</td>
+					<td>\${name}</td>
+					<td>\${price}</td>
+					<td>\${type}</td>
+					<td><span class="badge badge-\${taste == 'hot' ? 'danger' : 'warning'}">\${taste}</span></td>
+				</tr>`;
+		});
+	}
+	else {
+		html += "<tr><td colspan='6'>검색된 결과가 없습니다.</td></tr>"
+	}
+	html += "</table>";
+	$container.html(html);
 	
+}
+
+</script>	
 </div>
 </body>
 </html>

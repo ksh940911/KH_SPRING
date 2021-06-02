@@ -1,15 +1,16 @@
 create table menu (
-		id number,
-		restaurant varchar2(512) not null,
-		name varchar2(256) not null,
-		price number,
-		type varchar2(10) not null, -- 한식 kr, 중식 ch, 일식 jp
-		taste varchar2(10) not null, -- 순한맛 mild, 매운맛 hot
-		constraint pk_menu primary key(id),
-		constraint uq_menu unique (restaurant, name, taste) -- 두리순대국 순대국 mild, 순대국 hot
-	);
-    
+    id number,
+    restaurant varchar2(512) not null,
+    name varchar2(256) not null,
+    price number,
+    type varchar2(10) not null, --  한식 kr, 중식 ch, 일식 jp
+    taste varchar2(10) not null, -- 순한맛 mild, 매운맛 hot
+    constraint pk_menu primary key(id),
+    constraint uq_menu unique (restaurant, name, taste) -- 두리순대국 순대국 mild, 두리순대국 순대국 hot
+);
+
 create sequence seq_menu_id;
+
 
 insert into spring.menu (id,restaurant,name,price,type,taste) values (seq_menu_id.nextval,'두리순대국','순대국',7000,'kr','mild');
 insert into spring.menu (id,restaurant,name,price,type,taste) values (seq_menu_id.nextval,'두리순대국','순대국',7000,'kr','hot');
@@ -33,4 +34,7 @@ insert into spring.menu (id,restaurant,name,price,type,taste) values (seq_menu_i
 
 commit;
 
-select * from menu;
+select
+    *
+from 
+    menu;

@@ -12,6 +12,6 @@ public class Menu {
 	private String restaurant;
 	private String name;
 	private int price;
-	private String type; // kr, ch, jp
+	private MenuType type; // kr, ch, jp
 	private String taste; // mild, hot
 }

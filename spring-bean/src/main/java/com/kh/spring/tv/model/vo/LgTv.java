@@ -7,7 +7,7 @@ public class LgTv implements Tv {
 	
 	/**
 	 * bean>property
-	 * setter를 이용해서 의존주입 DI(Dependency Injection)한다.
+	 * setter를 이용해서 의존주입 Dependency Injection한다.
 	 * 
 	 * @param remocon
 	 */
@@ -17,7 +17,7 @@ public class LgTv implements Tv {
 	}
 	
 	/**
-	 * bean>constructor-arg
+	 * bean>constructor
 	 * 생성자를 이용해서 의존주입 DI 한다.
 	 * @param remocon
 	 */

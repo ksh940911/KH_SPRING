@@ -1,5 +1,8 @@
 package com.kh.java.enum_;
 
+import lombok.ToString;
+
+@ToString
 public enum ItemType {
 	GLASSES(123), PERFUME(456), COSMETIC(789);
 	
@@ -15,6 +18,7 @@ public enum ItemType {
 		return this.value;
 	}
 	
+	//setter
 	//valueOf
 	public static ItemType valueOf(int value) {
 		switch(value) {
@@ -24,8 +28,8 @@ public enum ItemType {
 		default:
 			throw new AssertionError("Unknown ItemType : " + value);
 		}
-		
-		
 	}
+	
+	
 	
 }

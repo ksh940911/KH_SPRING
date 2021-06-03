@@ -55,6 +55,8 @@
                             <a class="dropdown-item" href="${pageContext.request.contextPath}/demo/devList.do">Dev 목록</a>
                         </div>
 				    </li>
+				    <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/memo/memo.do">Memo(AOP)</a></li>
+				    <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/menu/menu.do">Menu(REST)</a></li>
 			    </ul>
 			    <c:if test="${loginMember == null}">
    			    <%--로그인 이전--%>
@@ -69,7 +71,7 @@
                 	type="button">회원가입</button>
 			    </c:if>
 			    <c:if test="${loginMember != null}">
-			    <%--로그인 이후--%>
+			    <%--로그인 이후 --%>
 			    <span><a href="${pageContext.request.contextPath}/member/memberDetail.do">${loginMember.name}</a>님, 안녕하세요.</span>
 			    &nbsp;
 			    <button 

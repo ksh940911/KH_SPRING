@@ -4,7 +4,7 @@
   <artifactId>spring-bean</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>spring-bean</name>
-  <description>spring-bean, di test</description>
+  <description>spring bean, di test</description>
   <dependencies>
   	<!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
 	<dependency>

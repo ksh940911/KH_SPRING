@@ -2,6 +2,7 @@ package com.kh.spring.demo.model.validator;
 
 import java.util.regex.Pattern;
 
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -10,6 +11,7 @@ import com.kh.spring.demo.model.vo.Dev;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Component
 public class DevValidator implements Validator {
 
 	/**
@@ -17,7 +19,7 @@ public class DevValidator implements Validator {
 	 */
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return Dev.class.isAssignableFrom(clazz);
+		return Dev.class.equals(clazz);
 	}
 
 	/**

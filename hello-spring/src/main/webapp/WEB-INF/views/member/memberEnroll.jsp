@@ -16,14 +16,14 @@
 		<table class="mx-auto">
 			<tr>
 				<th>아이디</th>
-				<td>
-					<input type="text" 
-						   class="form-control" 
-						   placeholder="4글자이상"
-						   name="id" 
-						   id="id"
-						   required>
-				</td>
+			    <td>
+			        <div id="memberId-container">
+			            <input type="text" class="form-control" placeholder="아이디 (4글자이상)" name="id" id="id" required>
+			            <span class="guide ok">이 아이디는 사용가능합니다.</span>
+			            <span class="guide error">이 아이디는 사용할 수 없습니다.</span>
+			            <input type="hidden" id="idValid" value="0"/>
+			        </div>
+			    </td>
 			</tr>
 			<tr>
 				<th>패스워드</th>
@@ -96,6 +96,40 @@
 	</form>
 </div>
 <script>
+$("#id").keyup(e => {
+	const id = $(e.target).val();
+	const $error = $(".guide.error");
+	const $ok = $(".guide.ok");
+	const $idValid = $("#idValid"); // 0 -> 1(중복검사 성공시)
+
+	if(id.length < 4) {
+		$(".guide").hide();
+		$idValid.val(0); // 다시 작성하는 경우 대비
+		return;
+	}
+	// {id} => {id: "abcde"}
+	$.ajax({
+		url: "${pageContext.request.contextPath}/member/checkIdDuplicate3.do",
+		data: {id},
+		success: (data) => {
+			console.log(data); // {"available": true}
+			const {available} = data;
+			if(available){
+				$ok.show();
+				$error.hide();
+				$idValid.val(1);
+			}
+			else {
+				$ok.hide();
+				$error.show();
+				$idValid.val(0);
+			}
+		},
+		error: (xhr, statusText, err) => {
+			console.log(xhr, statusText, err);
+		}
+	});
+});
 	
 $("#passwordCheck").blur(function(){
 	var $password = $("#password"), $passwordCheck = $("#passwordCheck");
@@ -110,6 +144,13 @@ $("[name=memberEnrollFrm]").submit(function(){
 	var $id = $("#id");
 	if(/^\w{4,}$/.test($id.val()) == false) {
 		alert("아이디는 최소 4자리이상이어야 합니다.");
+		$id.focus();
+		return false;
+	}
+
+	var $idValid = $("#idValid");
+	if($idValid.val() == 0){
+		alert("아이디 중복검사 해주세요.");
 		$id.focus();
 		return false;
 	}

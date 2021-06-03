@@ -25,7 +25,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.spring.demo.model.service.DemoService;
 import com.kh.spring.demo.model.validator.DevValidator;
+import com.kh.spring.demo.model.validator.MusicianValidator;
 import com.kh.spring.demo.model.vo.Dev;
+import com.kh.spring.demo.model.vo.Musician;
 
 /**
  * 사용자 요청 하나당 이를 처리하는 Controller 메소드(Handler)가 하나씩 존재한다.
@@ -182,9 +184,14 @@ public class DemoController {
 		return "demo/devResult";
 	}
 	
+	@Autowired DevValidator devValidator;
+	@Autowired MusicianValidator musicianValidator;
+	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
-		binder.setValidator(new DevValidator());
+//		binder.setValidator(new DevValidator());
+//		binder.addValidators(new DevValidator(), new MusicianValidator());
+		binder.addValidators(devValidator, musicianValidator);
 	}
 	
 	/**
@@ -195,8 +202,9 @@ public class DemoController {
 	 * @return
 	 */
 	@RequestMapping(value = "/insertDev.do", method = RequestMethod.POST)
-	public String insertDev(@ModelAttribute Dev dev, RedirectAttributes redirectAttr) {
+	public String insertDev(Dev dev, Musician musician, RedirectAttributes redirectAttr) {
 		log.info("dev = {}", dev);
+		log.info("musician = {}", musician);
 		
 		try {
 			//1. 업무로직

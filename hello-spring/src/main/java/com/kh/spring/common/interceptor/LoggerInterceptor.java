@@ -37,6 +37,8 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter{
 		log.debug("modelAndView = {}", modelAndView);
 		
 	}
+	
+	
 
 	/**
 	 * view단(jsp) 작업이후

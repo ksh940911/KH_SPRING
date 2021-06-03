@@ -4,7 +4,7 @@ public class SamsungRemoteControl implements RemoteControl {
 
 	@Override
 	public void changeChannel(int no) {
-		System.out.println("No JAm! 채널을 " + no + " 번으로 변경합니다.");
+		System.out.println("세계1등 리모콘, 채널을 " + no + "로 변경합니다.");
 	}
 
 }

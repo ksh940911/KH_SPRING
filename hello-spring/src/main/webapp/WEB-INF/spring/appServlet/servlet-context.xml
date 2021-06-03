@@ -3,9 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 	<!-- 기본namespace는 mvc이다. -->
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
@@ -40,12 +42,72 @@
 		</interceptor>
 		<interceptor>
 			<mapping path="/member/**"/>
+			<mapping path="/board/**"/>
 			<exclude-mapping path="/member/memberLogin.do"/>
 			<exclude-mapping path="/member/memberEnroll.do"/>
+			<exclude-mapping path="/member/checkIdDuplicate*.do"/>
+			<exclude-mapping path="/board/boardList.do"/>
+			<exclude-mapping path="/board/searchTitle.do"/>
 			<beans:bean 
 					id="loginInterceptor"
 					class="com.kh.spring.common.interceptor.LoginInterceptor"/>
 		</interceptor>
 	</interceptors>
+	
+	<!-- #11.1 aop관련 -->
+	<!-- xml 방식 -->
+	<!-- 
+	<beans:bean id="loggerAspect" class="com.kh.spring.common.aop.LoggerAspect" />
+	<aop:config>
+		<aop:aspect id="loggerAspect" ref="loggerAspect">
+			<aop:pointcut expression="execution(* com.kh.spring.memo..selectMemoList(..))" id="loggerPointcut"/>
+			<aop:around method="logger" pointcut-ref="loggerPointcut"/>
+		</aop:aspect>
+	</aop:config> 
+	-->
+	
+	<!-- annotation 방식 -->
+	<!-- 
+		aop관련 annotation등록
+		root-context의 aop설정(transaction)을 servlet-context에 적용.
+	 -->
+	<aop:aspectj-autoproxy/>
+	
+	<!-- #12.1 파일업로드를 처리할 Resolver클래스 빈등록(빈이름 주의) -->
+	<beans:bean 
+			id="multipartResolver" 
+			class="org.springframework.web.multipart.commons.CommonsMultipartResolver">   
+		<!-- 
+			multipart/form-data 요청당 최대 파일 크기는 50MB(50 * 1024 * 1024)이다. 
+			default: -1(제한없음)
+		-->
+		<beans:property name="maxUploadSize" value="52428800" /> 
+		<!-- 파일하나당 최대용량은 10MB(10 * 1024 * 1024)이다. 기본값: -1(제한없음) -->
+		<beans:property name="maxUploadSizePerFile" value="10485760" /> 
+		<!-- 메모리 사용최대용량. 기본값 10240. 이값을 넘어가면, 임시파일로 저장함. -->
+		<beans:property name="maxInMemorySize" value="10240" /> 
+	</beans:bean>
+	
+	<!-- #14.1 jsonView Bean 및 viewResolver 등록 -->
+	<!-- 요청한 viewName과 실제bean이름을 매핑해주는 BeanNameViewResolver를 사용함. -->
+    <!-- bean아이디는 viewResolver로 반드시 지정. 처리순서를 1로 우선처리되도록함. -->
+    <beans:bean 
+    	id="viewResolver" 
+    	class="org.springframework.web.servlet.view.BeanNameViewResolver">
+        <beans:property name="order" value="1"/>
+    </beans:bean>   
+	
+	<beans:bean 
+		id="jsonView" 
+		class="net.sf.json.spring.web.servlet.view.JsonView">
+		<beans:property name="contentType" value="application/json;charset=UTF-8" />
+	</beans:bean>
+	
+	<!-- #15.1 @Responsebody사용을 위한 의존 : 빈등록 (스프링 5.x => MappingJackson2HttpMessageConverter) -->
+	<beans:bean 
+		id="jacksonMessageConverter" 
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+
+	
 	
 </beans:beans>

@@ -69,6 +69,7 @@ div#demo-container{
 				</div>
 			</div>
 		</div>
+		<input type="hidden" name="instrument" value="violin" />
 	</form>
 	<!-- 전송버튼  -->
 	<div class="list-group">

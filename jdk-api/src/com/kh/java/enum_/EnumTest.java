@@ -31,6 +31,20 @@ public class EnumTest {
 		Item item2 = new Item("르라보", ItemType.PERFUME);
 		Item item3 = new Item("참존", ItemType.COSMETIC);
 		
+		//enum toString override가능
+		System.out.println(item1.getItemType());
+		System.out.println(item2.getItemType());
+		System.out.println(item3.getItemType());
+		/*
+		 	GLASSES
+			PERFUME
+			COSMETIC
+			
+			ItemType.GLASSES(value=123)
+			ItemType.PERFUME(value=456)
+			ItemType.COSMETIC(value=789)
+		 */
+		
 		//getter
 		System.out.println(item1.getItemType().getValue());
 		System.out.println(item2.getItemType().getValue());
@@ -38,9 +52,8 @@ public class EnumTest {
 		
 		//setter
 		//{"name":"젠틀몬스터", "itemType":123}
-		Item item4 = new Item("젠틀몬스터", ItemType.valueOf(123));
+		Item item4 = new Item("구찌", ItemType.valueOf(123));
 		System.out.println(item4);
-		
 	}
 	
 	@Data
@@ -88,5 +101,9 @@ public class EnumTest {
 	class Person {
 		private String name;
 		private int color;
-	}		
+	}
+	
+	
+	
+	
 }

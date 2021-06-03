@@ -15,29 +15,26 @@ public class UserController {
 	/**
 	 * 1.field
 	 */
-	@Autowired
+	//@Autowired
 	private UserService userService;
 	
 	/**
 	 * 2. setter
 	 * 
 	 */
-	@Autowired
+//	@Autowired
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
 	
-	/**
-	 * 3. 생성자
-	 * 
-	 */
 	@Autowired
 	public UserController(UserService userService) {
 		this.userService = userService;
 	}
 	
+	
 	public void getUserDetail(String id) {
 		userService.getUserDetail(id);
 	}
-
+	
 }

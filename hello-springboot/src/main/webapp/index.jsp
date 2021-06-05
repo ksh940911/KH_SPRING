@@ -227,7 +227,7 @@ div.result{width:70%; margin:0 auto;}
 				e.preventDefault();
 				const $frm = $(e.target);
 				
-				/* const menu = {
+				const menu = {
 					id : $frm.find("[name=id]").val(),
 					restaurant : $frm.find("[name=restaurant]").val(),
 					name : $frm.find("[name=name]").val(),
@@ -235,16 +235,12 @@ div.result{width:70%; margin:0 auto;}
 					type : $frm.find("[name=type]:checked").val(),
 					taste : $frm.find("[name=taste]:checked").val(),
 				};
-				console.log(menu); */
+				console.log(menu);
 
 				//formData를 활용해서 객체만들기
-				const frmData = new FormData(e.target);
-				const menu = {};
-				frmData.forEach((value, key) => {
-					menu[key] = value;
-				});
-				console.log(menu);
-				
+				/* const menu = new FormData(e.target);
+				console.log(menu); */
+
 				$.ajax({
 					url: `${pageContext.request.contextPath}/menu/\${menu.id}`,
 					method: "PUT",
@@ -308,45 +304,6 @@ div.result{width:70%; margin:0 auto;}
 			});
 			</script>
 			
-			<!-- 4. 삭제 DELETE /menu/123 -->    
-			<div class="menu-test">
-		    	<h4>메뉴 삭제하기(DELETE)</h4>
-		    	<p>메뉴번호를 사용해 해당메뉴정보를 삭제함.</p>
-		    	<form id="menuDeleteFrm">
-		    		<input type="text" name="id" placeholder="메뉴번호" class="form-control" /><br />
-		    		<input type="submit" class="btn btn-block btn-outline-danger btn-send" value="삭제" >
-		    	</form>
-		    </div>
-		    <script>
-			$("#menuDeleteFrm").submit(e => {
-				e.preventDefault();
-
-				const id = $("[name=id]", e.target).val();
-				if(!id) return;
-
-				$.ajax({
-					url: `${pageContext.request.contextPath}/menu/\${id}`,
-					method: "DELETE",
-					success(data){
-						console.log(data);
-						const {msg} = data;
-						alert(msg);
-					},
-					error(xhr, statusText, err){
-						const {status} = xhr;
-						switch(status){
-							case 404: alert("해당 메뉴가 존재하지 않습니다."); break;
-							default: alert("메뉴 삭제 실패!");
-						}
-					},
-					complete(){
-						$(e.target)[0].reset();
-					}
-				});
-					
-				
-			});
-		    </script>
 			
 			
 		</div>

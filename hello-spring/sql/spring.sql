@@ -1,5 +1,5 @@
 --===============================
--- ê´€ë¦¬ì ê³„ì •
+-- °ü¸®ÀÚ °èÁ¤
 --===============================
 create user spring
 identified by spring
@@ -8,7 +8,7 @@ default tablespace users;
 grant connect, resource to spring;
 
 --===============================
--- spring ê³„ì •
+-- spring °èÁ¤
 --===============================
 
 create table dev(
@@ -30,7 +30,7 @@ from
     dev;
     
 
---íšŒì›í…Œì´ë¸” ê´€ë ¨
+--È¸¿øÅ×ÀÌºí °ü·Ã
 create table member(
     id varchar2(15),
     password varchar2(300) not null,
@@ -42,15 +42,15 @@ create table member(
     address varchar2(512),
     hobby varchar2(256),
     enroll_date date default sysdate, 
-    enabled number default 1,               --í™œì„±í™”ì—¬ë¶€ 1(í™œì„±í™”), 0(ë¹„í™œì„±í™”)
+    enabled number default 1,               --È°¼ºÈ­¿©ºÎ 1(È°¼ºÈ­), 0(ºñÈ°¼ºÈ­)
     constraint pk_member_id primary key(id),
     constraint ck_member_gender check(gender in ('M', 'F')),
     constraint ck_member_enabled check(enabled in (1,0))
 );
 
-insert into spring.member values ('abcde','1234','ì•„ë¬´ê°œ','M',to_date('88-01-25','rr-mm-dd'),'abcde@naver.com','01012345678','ì„œìš¸ì‹œ ê°•ë‚¨êµ¬','ìš´ë™,ë“±ì‚°,ë…ì„œ',default,default);
-insert into spring.member values ('qwerty','1234','ê¹€ë§ë…„','F',to_date('78-02-25','rr-mm-dd'),'qwerty@naver.com','01098765432','ì„œìš¸ì‹œ ê´€ì•…êµ¬','ìš´ë™,ë“±ì‚°',default,default);
-insert into spring.member values ('admin','1234','ê´€ë¦¬ì','F',to_date('90-12-25','rr-mm-dd'),'admin@naver.com','01012345678','ì„œìš¸ì‹œ ê°•ë‚¨êµ¬','ë…ì„œ',default,default);
+insert into spring.member values ('abcde','1234','¾Æ¹«°³','M',to_date('88-01-25','rr-mm-dd'),'abcde@naver.com','01012345678','¼­¿ï½Ã °­³²±¸','¿îµ¿,µî»ê,µ¶¼­',default,default);
+insert into spring.member values ('qwerty','1234','±è¸»³â','F',to_date('78-02-25','rr-mm-dd'),'qwerty@naver.com','01098765432','¼­¿ï½Ã °ü¾Ç±¸','¿îµ¿,µî»ê',default,default);
+insert into spring.member values ('admin','1234','°ü¸®ÀÚ','F',to_date('90-12-25','rr-mm-dd'),'admin@naver.com','01012345678','¼­¿ï½Ã °­³²±¸','µ¶¼­',default,default);
 commit;
 
 select
@@ -75,7 +75,7 @@ from
 where
     id = 'honggd';
 
--- memoí…Œì´ë¸” ìƒì„±
+-- memoÅ×ÀÌºí »ı¼º
 create table memo(
     no number,
     memo varchar2(2000),
@@ -88,7 +88,7 @@ create sequence seq_memo_no;
 select * from memo;
 
 
--- boardí…Œì´ë¸”
+-- boardÅ×ÀÌºí
 create table board(
     no number,
     title varchar2(500),
@@ -102,7 +102,7 @@ create table board(
 );
 
 
--- attachmentí…Œì´ë¸” 
+-- attachmentÅ×ÀÌºí 
 create table attachment(
     no number,
     board_no number not null,
@@ -145,70 +145,70 @@ values(
     '20200525_020425_345.jpg', default, default, default
 );
 
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 1','abcde','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/02/10','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 2','qwerty','ì•ˆë…•í•˜ì„¸ìš”',to_date('18/02/12','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 3','admin','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/02/13','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 4','abcde','ì•ˆë…•í•˜ì„¸ìš”',to_date('18/02/14','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 5','qwerty','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/02/15','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 6','admin','ì•ˆë…•í•˜ì„¸ìš”',to_date('18/02/16','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 7','abcde','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/02/17','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 8','qwerty','ì•ˆë…•í•˜ì„¸ìš”',to_date('18/02/18','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 9','admin','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/02/19','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 10','abcde','ì•ˆë…•í•˜ì„¸',to_date('18/02/20','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 11','qwerty','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/03/11','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 12','admin','ì•ˆë…•í•˜ì„¸',to_date('18/03/12','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 13','abcde','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/03/13','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 14','qwerty','ì•ˆë…•í•˜ì„¸',to_date('18/03/14','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 15','admin','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/03/15','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 1','abcde','¹İ°©½À´Ï´Ù',to_date('18/02/10','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 2','qwerty','¾È³çÇÏ¼¼¿ä',to_date('18/02/12','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 3','admin','¹İ°©½À´Ï´Ù',to_date('18/02/13','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 4','abcde','¾È³çÇÏ¼¼¿ä',to_date('18/02/14','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 5','qwerty','¹İ°©½À´Ï´Ù',to_date('18/02/15','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 6','admin','¾È³çÇÏ¼¼¿ä',to_date('18/02/16','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 7','abcde','¹İ°©½À´Ï´Ù',to_date('18/02/17','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 8','qwerty','¾È³çÇÏ¼¼¿ä',to_date('18/02/18','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 9','admin','¹İ°©½À´Ï´Ù',to_date('18/02/19','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 10','abcde','¾È³çÇÏ¼¼',to_date('18/02/20','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 11','qwerty','¹İ°©½À´Ï´Ù',to_date('18/03/11','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 12','admin','¾È³çÇÏ¼¼',to_date('18/03/12','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 13','abcde','¹İ°©½À´Ï´Ù',to_date('18/03/13','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 14','qwerty','¾È³çÇÏ¼¼',to_date('18/03/14','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 15','admin','¹İ°©½À´Ï´Ù',to_date('18/03/15','RR/MM/DD'),0);
 
 
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 16','abcde','ì•ˆë…•í•˜ì„¸',to_date('18/03/16','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 17','qwerty','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/03/17','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 18','admin','ì•ˆë…•í•˜ì„¸',to_date('18/03/18','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 19','abcde','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/03/19','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 20','qwerty','ì•ˆë…•í•˜ì„¸',to_date('18/03/20','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 21','admin','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/04/01','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 22','abcde','ì•ˆë…•í•˜ì„¸',to_date('18/04/02','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 23','qwerty','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/04/03','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 24','admin','ì•ˆë…•í•˜ì„¸',to_date('18/04/04','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 25','abcde','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/04/05','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 26','qwerty','ì•ˆë…•í•˜ì„¸',to_date('18/04/06','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 27','admin','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/04/07','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 28','abcde','ì•ˆë…•í•˜ì„¸',to_date('18/04/08','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 29','qwerty','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/04/09','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 30','admin','ì•ˆë…•í•˜ì„¸',to_date('18/04/10','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 16','abcde','¾È³çÇÏ¼¼',to_date('18/03/16','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 17','qwerty','¹İ°©½À´Ï´Ù',to_date('18/03/17','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 18','admin','¾È³çÇÏ¼¼',to_date('18/03/18','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 19','abcde','¹İ°©½À´Ï´Ù',to_date('18/03/19','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 20','qwerty','¾È³çÇÏ¼¼',to_date('18/03/20','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 21','admin','¹İ°©½À´Ï´Ù',to_date('18/04/01','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 22','abcde','¾È³çÇÏ¼¼',to_date('18/04/02','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 23','qwerty','¹İ°©½À´Ï´Ù',to_date('18/04/03','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 24','admin','¾È³çÇÏ¼¼',to_date('18/04/04','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 25','abcde','¹İ°©½À´Ï´Ù',to_date('18/04/05','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 26','qwerty','¾È³çÇÏ¼¼',to_date('18/04/06','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 27','admin','¹İ°©½À´Ï´Ù',to_date('18/04/07','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 28','abcde','¾È³çÇÏ¼¼',to_date('18/04/08','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 29','qwerty','¹İ°©½À´Ï´Ù',to_date('18/04/09','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 30','admin','¾È³çÇÏ¼¼',to_date('18/04/10','RR/MM/DD'),0);
 
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 31','abcde','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/04/16','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 32','qwerty','ì•ˆë…•í•˜ì„¸',to_date('18/04/17','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 33','admin','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/04/18','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 34','abcde','ì•ˆë…•í•˜ì„¸',to_date('18/04/19','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 35','qwerty','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/04/20','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 36','admin','ì•ˆë…•í•˜ì„¸',to_date('18/05/01','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 37','abcde','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/05/02','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 38','qwerty','ì•ˆë…•í•˜ì„¸',to_date('18/05/03','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 39','admin','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/05/04','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 40','abcde','ì•ˆë…•í•˜ì„¸',to_date('18/05/05','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 41','qwerty','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/05/06','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 42','admin','ì•ˆë…•í•˜ì„¸',to_date('18/05/07','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 43','abcde','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/05/08','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 44','qwerty','ì•ˆë…•í•˜ì„¸',to_date('18/05/09','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 45','admin','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/05/10','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 31','abcde','¹İ°©½À´Ï´Ù',to_date('18/04/16','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 32','qwerty','¾È³çÇÏ¼¼',to_date('18/04/17','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 33','admin','¹İ°©½À´Ï´Ù',to_date('18/04/18','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 34','abcde','¾È³çÇÏ¼¼',to_date('18/04/19','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 35','qwerty','¹İ°©½À´Ï´Ù',to_date('18/04/20','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 36','admin','¾È³çÇÏ¼¼',to_date('18/05/01','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 37','abcde','¹İ°©½À´Ï´Ù',to_date('18/05/02','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 38','qwerty','¾È³çÇÏ¼¼',to_date('18/05/03','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 39','admin','¹İ°©½À´Ï´Ù',to_date('18/05/04','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 40','abcde','¾È³çÇÏ¼¼',to_date('18/05/05','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 41','qwerty','¹İ°©½À´Ï´Ù',to_date('18/05/06','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 42','admin','¾È³çÇÏ¼¼',to_date('18/05/07','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 43','abcde','¹İ°©½À´Ï´Ù',to_date('18/05/08','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 44','qwerty','¾È³çÇÏ¼¼',to_date('18/05/09','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 45','admin','¹İ°©½À´Ï´Ù',to_date('18/05/10','RR/MM/DD'),0);
 
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 46','abcde','ì•ˆë…•í•˜ì„¸',to_date('18/05/16','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 47','qwerty','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/05/17','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 48','admin','ì•ˆë…•í•˜ì„¸',to_date('18/05/18','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 49','abcde','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/05/19','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 50','qwerty','ì•ˆë…•í•˜ì„¸',to_date('18/05/20','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 51','admin','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/05/01','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 52','abcde','ì•ˆë…•í•˜ì„¸',to_date('18/06/02','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 53','qwerty','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/06/03','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 54','admin','ì•ˆë…•í•˜ì„¸',to_date('18/06/04','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 55','abcde','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/06/05','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 56','qwerty','ì•ˆë…•í•˜ì„¸',to_date('18/06/06','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 57','admin','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/06/07','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 58','abcde','ì•ˆë…•í•˜ì„¸',to_date('18/06/08','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 59','qwerty','ë°˜ê°‘ìŠµë‹ˆë‹¤',to_date('18/06/09','RR/MM/DD'),0);
-Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'ì•ˆë…•í•˜ì„¸ìš”, ê²Œì‹œíŒì…ë‹ˆë‹¤ - 60','admin','ì•ˆë…•í•˜ì„¸',to_date('18/06/10','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 46','abcde','¾È³çÇÏ¼¼',to_date('18/05/16','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 47','qwerty','¹İ°©½À´Ï´Ù',to_date('18/05/17','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 48','admin','¾È³çÇÏ¼¼',to_date('18/05/18','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 49','abcde','¹İ°©½À´Ï´Ù',to_date('18/05/19','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 50','qwerty','¾È³çÇÏ¼¼',to_date('18/05/20','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 51','admin','¹İ°©½À´Ï´Ù',to_date('18/05/01','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 52','abcde','¾È³çÇÏ¼¼',to_date('18/06/02','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 53','qwerty','¹İ°©½À´Ï´Ù',to_date('18/06/03','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 54','admin','¾È³çÇÏ¼¼',to_date('18/06/04','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 55','abcde','¹İ°©½À´Ï´Ù',to_date('18/06/05','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 56','qwerty','¾È³çÇÏ¼¼',to_date('18/06/06','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 57','admin','¹İ°©½À´Ï´Ù',to_date('18/06/07','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 58','abcde','¾È³çÇÏ¼¼',to_date('18/06/08','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 59','qwerty','¹İ°©½À´Ï´Ù',to_date('18/06/09','RR/MM/DD'),0);
+Insert into SPRING.BOARD (NO,TITLE,MEMBER_ID,CONTENT,REG_DATE,READ_COUNT) values (SEQ_BOARD_NO.nextval,'¾È³çÇÏ¼¼¿ä, °Ô½ÃÆÇÀÔ´Ï´Ù - 60','admin','¾È³çÇÏ¼¼',to_date('18/06/10','RR/MM/DD'),0);
 
 
 commit;

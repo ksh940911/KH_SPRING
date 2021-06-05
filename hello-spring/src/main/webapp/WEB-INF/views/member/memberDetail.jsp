@@ -50,4 +50,5 @@ div#update-container input, div#update-container select {margin-bottom:10px;}
 		<input type="reset" class="btn btn-outline-success" value="취소">
 	</form>
 </div>
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

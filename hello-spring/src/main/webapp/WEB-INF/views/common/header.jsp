@@ -56,7 +56,6 @@
                         </div>
 				    </li>
 				    <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/memo/memo.do">Memo(AOP)</a></li>
-				    <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/menu/menu.do">Menu(REST)</a></li>
 			    </ul>
 			    <c:if test="${loginMember == null}">
    			    <%--로그인 이전--%>

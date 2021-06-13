@@ -244,8 +244,6 @@ public class BoardController {
 		map.put("list", list);
 		map.put("searchTitle", searchTitle);
 		return map;
-	}
-	
 	
 	
 }

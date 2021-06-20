@@ -189,8 +189,7 @@ public class BoardController {
 			throw e;
 		}
 		return responseEntity;
-	}
-	
+	}	
 	
 	
 //	@GetMapping(
